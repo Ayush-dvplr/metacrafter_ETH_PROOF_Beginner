@@ -1,50 +1,67 @@
 # MyToken Smart Contract
 
-This repository contains a simple ERC20-like token contract written in Solidity. The contract includes basic functionalities such as minting and burning tokens, and it stores token balances in a mapping.
+This Solidity program is a simple token contract that demonstrates the basic syntax and functionality of the Solidity programming language. The purpose of this program is to serve as a starting point for those who are new to Solidity and want to get a feel for how it works.
 
-## Requirements
+## Description
 
-1. The contract has public variables that store the details about your coin:
-   - Token Name
-   - Token Abbreviation
-   - Total Supply
+This program is a simple ERC20-like token contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract includes basic functionalities such as minting and burning tokens, and it stores token balances in a mapping. This program serves as a simple and straightforward introduction to Solidity programming and can be used as a stepping stone for more complex projects in the future.
 
-2. The contract has a mapping of addresses to balances (`address => uint`).
+## Getting Started
 
-3. The contract includes a `mint` function that takes two parameters: an address and a value. The function increases the total supply by that number and increases the balance of the specified address by that amount.
+### Executing Program
 
-4. The contract includes a `burn` function, which works the opposite of the mint function. It takes an address and value as parameters. It deducts the value from the total supply and from the balance of the specified address.
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at [Remix IDE](https://remix.ethereum.org/).
 
-5. The `burn` function includes conditionals to ensure the balance of the sender is greater than or equal to the amount that is supposed to be burned.
+Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a `.sol` extension (e.g., `MyToken.sol`). Copy and paste the following code into the file:
 
-## Contract Details
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.18;
 
-### Variables
+contract MyToken {
+    // Public variables to store token details
+    string public tokenName;
+    string public tokenAbbrv;
+    uint public totalSupply;
 
-- `tokenName`: A string representing the name of the token.
-- `tokenAbbrv`: A string representing the abbreviation of the token.
-- `totalSupply`: An unsigned integer representing the total supply of the token.
-- `balances`: A mapping that stores the balance of each address.
+    // Mapping to store balances of addresses
+    mapping(address => uint) public balances;
 
-### Functions
+    // Constructor to initialize the token details
+    constructor(string memory _name, string memory _abbrv) {
+        tokenName = _name;
+        tokenAbbrv = _abbrv;
+        totalSupply = 0;
+    }
 
-- `constructor(string memory _name, string memory _abbrv)`: Initializes the contract with the token name and abbreviation. Sets the total supply to zero.
-- `mint(address _receiver, uint _amt)`: Mints new tokens, increases the total supply by the specified amount, and adds the amount to the receiver's balance.
-- `burn(address _sender, uint _amt)`: Burns tokens, decreases the total supply by the specified amount, and deducts the amount from the sender's balance. Requires that the sender has a balance greater than or equal to the amount to be burned.
+    // Function to mint new tokens
+    function mint(address _receiver, uint _amt) public {
+        totalSupply += _amt;
+        balances[_receiver] += _amt;
+    }
 
-## Usage
+    // Function to burn tokens
+    function burn(address _sender, uint _amt) public {
+        require(balances[_sender] >= _amt, "Insufficient balance to burn");
+        totalSupply -= _amt;
+        balances[_sender] -= _amt;
+    }
+}
+```
 
-### Deploying the Contract
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile MyToken.sol" button.
 
-1. Ensure you have a Solidity development environment set up (e.g., Remix, Truffle, Hardhat).
-2. Copy the `MyToken` contract code into your development environment.
-3. Deploy the contract by specifying the token name and abbreviation.
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "MyToken" contract from the dropdown menu, and then click on the "Deploy" button.
 
-### Minting Tokens
+Once the contract is deployed, you can interact with it by calling the mint and burn functions. For example, you can mint new tokens to an address by providing the address and the amount of tokens. Similarly, you can burn tokens by providing the address and the amount of tokens to be burned.
 
-Call the `mint` function with the receiver's address and the amount of tokens to mint. This will increase the total supply and the balance of the specified address.
+## Authors
 
-### Burning Tokens
+Ayush sah
+[@linkedin](https://www.linkedin.com/in/ayushsah404/)
 
-Call the `burn` function with the sender's address and the amount of tokens to burn. This will decrease the total supply and the balance of the specified address. Ensure that the sender has enough balance to burn the specified amount.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
